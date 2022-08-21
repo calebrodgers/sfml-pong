@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
-#include <iostream>
 #include <string>
+#include <cmath>
 
 using namespace sf;
 
@@ -27,6 +27,27 @@ public:
             body->move(Vector2f(0, amount));
         }
     }
+    void checkCollision(Ball *ball, bool left)
+    {
+        if (ball->getPosition().y + ball->getRadius() > body->getPosition().y && ball->getPosition().y - ball->getRadius() < body->getPosition().y + body->getSize().y)
+        {
+            if (left)
+            {
+                if (ball->getPosition().x + ball->getRadius() < body->getPosition().x + body->getSize().x)
+                {
+                    ball->collide();
+                }
+            }
+            else
+            {
+                if (ball->getPosition().x + ball->getRadius() > body->getPosition().x + body->getSize().x)
+                {
+                    ball->collide();
+                }
+            }
+        }
+    }
+
     void draw(RenderWindow *window)
     {
         window->draw(*body);
